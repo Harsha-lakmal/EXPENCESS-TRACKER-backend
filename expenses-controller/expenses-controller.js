@@ -1,6 +1,6 @@
-const db = require('../config/db');
+const db = require('../db/db-connection');
 
-exports.getAllExpenses = (req, res) => {
+const getAllExpenses = (req, res) => {
     const sql = "SELECT * FROM expenses ORDER BY date DESC";
     db.query(sql, (err, results) => {
         if (err) return res.status(500).json({ error: err.message });
@@ -8,7 +8,7 @@ exports.getAllExpenses = (req, res) => {
     });
 };
 
-exports.createExpense = (req, res) => {
+const createExpense = (req, res) => {
     const { user_id, date, description, amount } = req.body;
     const imagePath = req.file ? req.file.filename : null;
 
@@ -22,7 +22,7 @@ exports.createExpense = (req, res) => {
     });
 };
 
-exports.deleteExpense = (req, res) => {
+const deleteExpense = (req, res) => {
     const { id } = req.params;
     const sql = "DELETE FROM expenses WHERE expense_id = ?";
     db.query(sql, [id], (err, result) => {
@@ -30,3 +30,9 @@ exports.deleteExpense = (req, res) => {
         res.json({ message: "Expense deleted!" });
     });
 };
+
+module.exports = {
+    getAllExpenses,
+    createExpense,
+    deleteExpense
+} 
