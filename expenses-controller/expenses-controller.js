@@ -12,9 +12,9 @@ const createExpense = (req, res) => {
     const { user_id, date, description, amount } = req.body;
     const imagePath = req.file ? req.file.filename : null;
 
-    const sql = "INSERT INTO expenses (user_id, date, description, amount, image_path) VALUES (?, ?, ?, ?, ?)";
+    const sql = "INSERT INTO expenses (date,description,amount,image_path) VALUES (?, ?, ?, ?)";
     
-    db.query(sql, [user_id, date, description, amount, imagePath], (err, result) => {
+    db.query(sql, [date, description, amount, imagePath], (err, result) => {
         if (err) {
             return res.status(500).json({ error: "Data insert error!", details: err.message });
         }

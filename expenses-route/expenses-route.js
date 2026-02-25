@@ -4,7 +4,6 @@ const multer = require('multer');
 const path = require('path');
 const expenseController = require('../expenses-controller/expenses-controller');
 
-// Multer Storage Configuration
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'uploads/');
@@ -15,9 +14,9 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-// Define Routes
-router.get('/', expenseController.getAllExpenses);
-router.post('/', upload.single('image'), expenseController.createExpense);
+
+router.get('/expensess', expenseController.getAllExpenses);
+router.post('/expenses', upload.single('image'), expenseController.createExpense);
 router.delete('/:id', expenseController.deleteExpense);
 
 module.exports = router;
