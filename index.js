@@ -1,21 +1,26 @@
 const express = require('express');
-const cors = require('cors');
+const cors = require('cors');  
 const fs = require('fs');
 const expenseRoutes = require('./expenses-route/expenses-route');
 
 const app = express();
 
+ 
+app.use(cors({
+    origin: "http://localhost:5173",  
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,  
+    allowedHeaders: ["Content-Type", "Authorization"]  
+}));
+ 
 
-app.use(cors()); 
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
-
 
 const uploadDir = './uploads';
 if (!fs.existsSync(uploadDir)){
     fs.mkdirSync(uploadDir);
 }
-
 
 app.use('/api/expenses', expenseRoutes);
 
