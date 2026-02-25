@@ -18,5 +18,9 @@ const upload = multer({ storage: storage });
 router.get('/expensess', expenseController.getAllExpenses);
 router.post('/expenses', upload.single('image'), expenseController.createExpense);
 router.delete('/:id', expenseController.deleteExpense);
+router.put('/:id',upload.single('image'), expenseController.UpdateExpense);
+ 
+//router.put('/:id', upload.single('image'), expenseController.UpdateExpense);
+
 
 module.exports = router;

@@ -31,8 +31,32 @@ const deleteExpense = (req, res) => {
     });
 };
 
+const UpdateExpense = (req, res) => {
+    const { id } = req.params;
+    
+    const { date, description, amount } = req.body;
+    
+    
+    const imagePath = req.file ? req.file.filename : req.body.image_path;
+
+     
+    const sql = "UPDATE expenses SET date=?, description=?, amount=?, image_path=? WHERE expense_id=?";
+
+    db.query(sql, [date, description, amount, imagePath, id], (err, result) => {
+        if (err) return res.status(500).json({ error: err.message });
+        
+        
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: "Expense not found" });
+        }
+
+        res.json({ message: "Expense updated successfully!" });
+    });
+};
+
 module.exports = {
     getAllExpenses,
     createExpense,
-    deleteExpense
+    deleteExpense,
+    UpdateExpense
 } 
